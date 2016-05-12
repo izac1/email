@@ -28,3 +28,6 @@ phpunit.phar
 
 #config ignore
 /config
+
+#uploads folder
+/web/uploads
