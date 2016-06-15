@@ -7,6 +7,7 @@ $config = [
     'language' => 'ru-RU',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'homeUrl'=> 'http://email/',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -16,7 +17,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Admin',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -47,6 +48,27 @@ $config = [
             ],
         ],
         */
+        'mail' => [
+         'class' => 'yii\swiftmailer\Mailer',
+         'transport' => [
+             'class' => 'Swift_SmtpTransport',
+             'host' => 'smtp.yandex.ru',  
+             'username' => 'terrner',
+             'password' => '111111As',
+             'port' => '465', 
+             'encryption' => 'ssl',
+         ],
+     ],
+     'as beforeRequest' => [
+        'class' => yii\filters\AccessControl::className(),
+        'except' => ['login'],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
+    ],
     ],
     'params' => $params,
 ];

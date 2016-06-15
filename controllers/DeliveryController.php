@@ -4,16 +4,18 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use app\models\Users;
+use app\models\Delivery;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\TemplateFile;
+use yii\helpers\Url;    
 
 /**
- * UsersController implements the CRUD actions for Users model.
+ * DeliveryController implements the CRUD actions for Delivery model.
  */
-class UsersController extends Controller
+class DeliveryController extends Controller
 {
     /**
      * @inheritdoc
@@ -21,15 +23,15 @@ class UsersController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                    'class' => AccessControl::className(),
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
+        'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -40,13 +42,13 @@ class UsersController extends Controller
     }
 
     /**
-     * Lists all Users models.
+     * Lists all Delivery models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Users::find(),
+            'query' => Delivery::find(),
         ]);
 
         return $this->render('index', [
@@ -55,7 +57,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Displays a single Users model.
+     * Displays a single Delivery model.
      * @param integer $id
      * @return mixed
      */
@@ -67,16 +69,16 @@ class UsersController extends Controller
     }
 
     /**
-     * Creates a new Users model.
+     * Creates a new Delivery model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Users();
+        $model = new Delivery();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +87,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Updates an existing Users model.
+     * Updates an existing Delivery model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -104,7 +106,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Deletes an existing Users model.
+     * Deletes an existing Delivery model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,18 +119,41 @@ class UsersController extends Controller
     }
 
     /**
-     * Finds the Users model based on its primary key value.
+     * Finds the Delivery model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Users the loaded model
+     * @return Delivery the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Users::findOne($id)) !== null) {
+        if (($model = Delivery::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionDodelivery(){ //перенести в файл крона    
+
+        $messages = Delivery::find()->where(['status' => '0'])->limit(10)->all();
+
+        foreach ($messages as $messag) {
+            try{
+                Yii::$app->mail->compose('@webroot/'.TemplateFile::getFileByPath($messag->template->filename),['user'=>$messag->user])
+                ->setFrom(Yii::app()->params['adminEmail'])
+                ->setTo('terrner@gmail.com')
+                ->setSubject($messag->title)
+                ->send();
+                $messag->status = 1;
+                $messag->save();
+
+            }catch(\Swift_SwiftException $exception){
+                $messag->status = 2;
+                $messag->save();
+            }
+        }
+           
+        //$this->renderFile('@webroot/'.TemplateFile::getFileByPath($message->template->filename));
     }
 }

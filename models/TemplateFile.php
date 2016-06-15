@@ -69,7 +69,7 @@ class TemplateFile extends Model
 
     public function imgFolderRpl($filename){
         $file = file_get_contents($filename);
-        $file = str_replace('images/', '/uploads/'.$this->dirname.'/images/', $file);
+        $file = str_replace('images/', Yii::$app->homeUrl.'uploads/'.$this->dirname.'/images/', $file);
         file_put_contents($filename, $file);
         return true;
     }

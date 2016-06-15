@@ -44,4 +44,6 @@ class Template extends \yii\db\ActiveRecord
             'filename' => 'Название файла',
         ];
     }
+
+    
 }

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -10,9 +10,7 @@ $this->title = 'Шаблоны';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="template-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Создать шаблон', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
