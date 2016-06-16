@@ -44,7 +44,7 @@ class TemplateFile extends Model
             if($zip->extractTo('uploads/'.$this->dirname.'/')){
              $zip->close();
              unlink('uploads/'.$this->dirname.'/'.$this->templateFile->baseName.'.zip');
-             $this->imgFolderRpl($this->getFileByPath($this->dirname));
+             //$this->imgFolderRpl($this->getFileByPath($this->dirname));
              return $this->dirname;
         }else return $this->setError("Проблемы с разархивацией");
 
