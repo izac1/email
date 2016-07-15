@@ -132,29 +132,7 @@ class DeliveryController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionDodelivery(){ //перенести в файл крона    
-
-        $messages = Delivery::find()->where(['status' => '0'])->limit(10)->all();
-
-        foreach ($messages as $messag) {
-            var_dump(TemplateFile::getFileByPath($messag->template->filename));
-            /*try{
-                Yii::$app->mail->compose('@webroot/'.TemplateFile::getFileByPath($messag->template->filename),['user'=>$messag->user])
-                ->setFrom(Yii::app()->params['adminEmail'])
-                ->setTo('terrner@gmail.com')
-                ->setSubject($messag->title)
-                ->send();
-                $messag->status = 1;
-                $messag->save();
-
-            }catch(\Swift_SwiftException $exception){
-                $messag->status = 2;
-                $messag->save();
-            }*/
-        }
-           
+    }      
         //$this->renderFile('@webroot/'.TemplateFile::getFileByPath($message->template->filename));
     }
 }
