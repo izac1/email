@@ -26,9 +26,6 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-#config ignore
-/config
-
 #uploads folder
 /web/uploads
 
