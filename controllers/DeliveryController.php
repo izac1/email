@@ -139,7 +139,8 @@ class DeliveryController extends Controller
         $messages = Delivery::find()->where(['status' => '0'])->limit(10)->all();
 
         foreach ($messages as $messag) {
-            try{
+            var_dump(TemplateFile::getFileByPath($messag->template->filename));
+            /*try{
                 Yii::$app->mail->compose('@webroot/'.TemplateFile::getFileByPath($messag->template->filename),['user'=>$messag->user])
                 ->setFrom(Yii::app()->params['adminEmail'])
                 ->setTo('terrner@gmail.com')
@@ -151,7 +152,7 @@ class DeliveryController extends Controller
             }catch(\Swift_SwiftException $exception){
                 $messag->status = 2;
                 $messag->save();
-            }
+            }*/
         }
            
         //$this->renderFile('@webroot/'.TemplateFile::getFileByPath($message->template->filename));

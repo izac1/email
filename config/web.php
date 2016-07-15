@@ -48,17 +48,7 @@ $config = [
             ],
         ],
         */
-        'mail' => [
-         'class' => 'yii\swiftmailer\Mailer',
-         'transport' => [
-             'class' => 'Swift_SmtpTransport',
-             'host' => 'smtp.yandex.ru',  
-             'username' => 'terrner',
-             'password' => '111111As',
-             'port' => '465', 
-             'encryption' => 'ssl',
-         ],
-     ],
+        
      'as beforeRequest' => [
         'class' => yii\filters\AccessControl::className(),
         'except' => ['login'],

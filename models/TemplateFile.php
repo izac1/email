@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-
+use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
@@ -56,9 +56,8 @@ class TemplateFile extends Model
     }
 
     public function getFileByPath($dirname){
-        //var_dump($dirname);
-        foreach (glob('uploads/'.$dirname.'/*.php') as $filename) {
-             return  $filename;
+        foreach (glob(Yii::getAlias("@webroot").'/uploads/'.$dirname.'/*.php') as $filename) {
+             return  $dirname.'/'.basename($filename);
         }
     }
 

@@ -23,6 +23,17 @@ $config = [
             ],
         ],
         'db' => $db,
+        'mail' => [
+         'class' => 'yii\swiftmailer\Mailer',
+         'transport' => [
+             'class' => 'Swift_SmtpTransport',
+             'host' => 'smtp.yandex.ru',  
+             'username' => 'terrner',
+             'password' => '111111As',
+             'port' => '465', 
+             'encryption' => 'ssl',
+         ],
+     ],
     ],
     'params' => $params,
     /*
@@ -42,4 +53,7 @@ if (YII_ENV_DEV) {
     ];
 }
 
+
+Yii::setAlias('@webroot', dirname(__DIR__).'/web');
+Yii::setAlias('@app', dirname(dirname(__DIR__)));
 return $config;
