@@ -81,7 +81,7 @@ class TemplateController extends Controller
 
         
         if(Yii::$app->request->post() && $model->load(Yii::$app->request->post()) && $file->save($file,$model) && $model->save()){
-                $this->redirect('index');
+                $this->redirect(['index']);
         }else
         //if ($model->load() && $model->save()) {
         //    return $this->redirect(['view', 'id' => $model->id]);
