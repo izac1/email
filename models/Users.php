@@ -30,9 +30,11 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['firstname', 'lastname', 'email', 'category_id'], 'required'],
-            [['category_id'], 'integer'],
-            [['firstname', 'lastname', 'email'], 'string', 'max' => 255],
+            [['first_name', 'last_name', 'email','is_active','is_demo','is_subscribe','is_online','is_widget','version'], 'required'],
+            [['category_id','colibri_id'], 'integer'],
+            [['first_name', 'last_name', 'email'], 'string', 'max' => 255],
+            ['colibri_id','default','value'=>0,'isEmpty'=>function ($value) {return 0;}],
+            ['category_id','default','value'=>0,'isEmpty'=>function ($value) {return 0;}],
         ];
     }
 
@@ -43,10 +45,16 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'firstname' => 'Имя',
-            'lastname' => 'Фамилия',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
             'email' => 'Адресс электронной почты',
             'category_id' => 'Категория',
+            'is_active' => 'Активный Пользыватель',
+            'is_demo' => 'Демо версия',
+            'is_subscribe' => 'Подписан н рассылку',
+            'is_online'=> 'Онлайн',
+            'is_widget' => 'is_widget',
+            'version' => 'Версия продукта',
         ];
     }
 

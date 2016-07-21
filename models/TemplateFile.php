@@ -20,8 +20,8 @@ class TemplateFile extends Model
     {
         if ($this->validate()) {
             $this->dirname = $this->templateFile->baseName . '_'.$this->generateRandomString();
-            mkdir('uploads/'.$this->dirname);
-            if(!$this->templateFile->saveAs('uploads/'. $this->dirname . '/' . $this->templateFile->baseName . '.' .$this->templateFile->extension)) $this->setError("Загрузкой файла");
+            mkdir(Yii::getAlias('@upload_dir').'/'.$this->dirname);
+            if(!$this->templateFile->saveAs(Yii::getAlias('@upload_dir').'/'. $this->dirname . '/' . $this->templateFile->baseName . '.' .$this->templateFile->extension)) $this->setError("Загрузкой файла");
             else
             return $this->unzip($this->templateFile->baseName); 
         } else {
@@ -30,6 +30,12 @@ class TemplateFile extends Model
     }
 
     public function save($file,$model){
+        if($model->filename){
+            if(is_dir(Yii::getAlias('@upload_dir').'/'.$model->filename)){
+                if(!$this->deleteOld(Yii::getAlias('@upload_dir').'/'.$model->filename)) return $this->setError("Удаление старого файла");
+            }
+        }
+
         if($file->templateFile = UploadedFile::getInstance($file,'templateFile')){
             if($model->filename = $file->upload()){
                 return true;
@@ -40,10 +46,10 @@ class TemplateFile extends Model
     public function unzip($filename){
        $zip = new \ZipArchive();
 
-       if($zip->open('uploads/'.$this->dirname.'/'.$this->templateFile->baseName.'.zip') === TRUE){
-            if($zip->extractTo('uploads/'.$this->dirname.'/')){
+       if($zip->open(Yii::getAlias('@upload_dir').'/'.$this->dirname.'/'.$this->templateFile->baseName.'.zip') === TRUE){
+            if($zip->extractTo(Yii::getAlias('@upload_dir').'/'.$this->dirname.'/')){
              $zip->close();
-             unlink('uploads/'.$this->dirname.'/'.$this->templateFile->baseName.'.zip');
+             unlink(Yii::getAlias('@upload_dir').'/'.$this->dirname.'/'.$this->templateFile->baseName.'.zip');
              //$this->imgFolderRpl($this->getFileByPath($this->dirname));
              return $this->dirname;
         }else return $this->setError("Проблемы с разархивацией");
@@ -56,7 +62,7 @@ class TemplateFile extends Model
     }
 
     public function getFileByPath($dirname){
-        foreach (glob(Yii::getAlias("@webroot").'/uploads/'.$dirname.'/*.php') as $filename) {
+        foreach (glob(Yii::getAlias('@upload_dir').'/'.$dirname.'/*.php') as $filename) {
              return  $dirname.'/'.basename($filename);
         }
     }
@@ -78,5 +84,14 @@ class TemplateFile extends Model
         return [
             'templateFile' => 'Файл шаблона',
         ];
+    }
+
+    public function deleteOld($path){
+        $files = glob($path . '/*');
+        foreach ($files as $file) {
+            is_dir($file) ? removeDirectory($file) : unlink($file);
+        }
+        rmdir($path);
+        return true;
     }
 }

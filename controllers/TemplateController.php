@@ -81,7 +81,7 @@ class TemplateController extends Controller
 
         
         if(Yii::$app->request->post() && $model->load(Yii::$app->request->post()) && $file->save($file,$model) && $model->save()){
-                echo 'ok'; // Успех 
+                $this->redirected('index');
         }else
         //if ($model->load() && $model->save()) {
         //    return $this->redirect(['view', 'id' => $model->id]);
@@ -101,12 +101,13 @@ class TemplateController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $file = new TemplateFile();
+        if ($model->load(Yii::$app->request->post()) && $file->save($file,$model) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id,'file' => $file]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'file' => $file
             ]);
         }
     }

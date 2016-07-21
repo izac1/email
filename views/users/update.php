@@ -7,10 +7,10 @@ use app\models\Categories;
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
 
-$this->title = 'Изменить пользывателя: ' . $model->id;
+$this->title = 'Измeнение пользывателя: ' . $model->first_name .' '.$model->last_name;
 $this->params['breadcrumbs'][] = ['label' => 'Пользыватели', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+//$this->params['breadcrumbs'][] = ['label' => $model->first_name .' '.$model->last_name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Изменение пользывателя '.$model->first_name .' '.$model->last_name;
 ?>
 <div class="users-update">
 
@@ -18,8 +18,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
-         'categories'=>  ArrayHelper::map(Categories::find()->all(), 'id', 'name')
+        'categories'=>  ArrayHelper::map(Categories::find()->all(), 'id', 'name')
     ]) ?>
-    <?= var_dump($model->category->name); ?>
 
 </div>

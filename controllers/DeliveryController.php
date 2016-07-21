@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\Delivery;
+use app\models\Users;
+use app\models\UsersSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -76,12 +78,15 @@ class DeliveryController extends Controller
     public function actionCreate()
     {
         $model = new Delivery();
-
-        if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
+        if (!empty(Yii::$app->request->post('selection')) && $model->saveUser((array)Yii::$app->request->post('selection'))) {
             return $this->redirect(['index']);
         } else {
+            $searchModel = new UsersSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('create', [
                 'model' => $model,
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
             ]);
         }
     }
@@ -134,5 +139,4 @@ class DeliveryController extends Controller
         }
     }      
         //$this->renderFile('@webroot/'.TemplateFile::getFileByPath($message->template->filename));
-    }
 }

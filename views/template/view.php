@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Template */
 
-$this->title = $model->id;
+$this->title = $model->template_name;
 $this->params['breadcrumbs'][] = ['label' => 'Шаблоны', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,11 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'template_name',
+            'filename'
         ],
     ]) ?>
 
 </div>
 
 <div class="lol">
-    <?php echo $this->renderFile('@webroot/'.$file->getFileByPath($model->filename)); ?>
+    <?php echo $this->renderFile(Yii::getAlias('@upload_dir').'/'.$file->getFileByPath($model->filename)); ?>
 </div>

@@ -60,6 +60,9 @@ $config = [
         ],
     ],
     ],
+    'aliases' => [
+        '@upload_dir' => dirname(__DIR__).'/web/uploads',
+    ],
     'params' => $params,
 ];
 

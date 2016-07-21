@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title =  $dataProvider->query->where["status"] == 1 ?  'Список успешной рассылки ' .$model->id  : 'Список не успешной рассылки ' .$model->id; 
+$this->title =  $dataProvider->query->where["status"] == 1 ?  'Список успешной рассылки ' .$model->delivery_name  : 'Список не успешной рассылки ' .$model->delivery_name; 
 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -19,17 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            //'id',
-            //'delivery_name',
              [
-             	//'format'=>'html',
              	'label'=>'ФИО',
              	'value'=> function($model){
-                	return  $model->user->firstname.' '.$model->user->lastname;
+                	return  $model->user->first_name.' '.$model->user->last_name;
                 }
             ],
             [
-            	//'format'=>'html',
             	'label'=>'Email',
             	'value'=> function($model){
                 	return $model->user->email;

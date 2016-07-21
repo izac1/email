@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'title',
              ['attribute'=>'user_id',
             'value'=> function($model){
-                return $model->user->firstname .' '.  $model->user->lastname .' '.  $model->user->email ;
+                return $model->user->first_name .' '.  $model->user->last_name .' '.  $model->user->email ;
                 }
             ],
             ['attribute'=>'status',

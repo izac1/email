@@ -18,7 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'templates' => ArrayHelper::map(Template::find()->all(), 'id', 'template_name')
-    ]) ?>
+        'templates' => ArrayHelper::map(Template::find()->all(), 'id', 'template_name'),
+        'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+    ]);?>
 
 </div>

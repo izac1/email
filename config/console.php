@@ -54,6 +54,6 @@ if (YII_ENV_DEV) {
 }
 
 
-Yii::setAlias('@webroot', dirname(__DIR__).'/web');
+Yii::setAlias('@upload_dir', dirname(__DIR__).'/web/uploads');
 Yii::setAlias('@app', dirname(dirname(__DIR__)));
 return $config;

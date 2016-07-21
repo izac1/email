@@ -14,10 +14,18 @@ class m160507_184150_create_user_table extends Migration
     {
         $this->createTable('user_table', [
             'id' => $this->primaryKey(),
-            'firstname' => $this->string()->notNull(),
-            'lastname' => $this->string()->notNull(),
+            'colibri_id' => $this->integer()->notNull(),
+            'first_name' => $this->string()->notNull(),
+            'last_name' => $this->string()->notNull(),
             'email' => $this->string()->notNull(),
             'category_id' => $this->integer()->notNull(),
+            'is_active' => $this->boolean()->notNull(),
+            'is_demo' => $this->boolean()->notNull(),
+            'is_subscribe' => $this->boolean()->notNull(),
+            'is_online' => $this->boolean()->notNull(),
+            'is_widget' => $this->boolean()->notNull(),
+            'version' => $this->string()->notNull(),
+
         ]);
     }
 

@@ -51,15 +51,15 @@ class Delivery extends \yii\db\ActiveRecord
         ];
     }
 
-    public function saveUser(){
-        foreach ($this->user_id as $value) {
+    public function saveUser($ids){
+        foreach ($ids as $value) {
                 $model =  new Delivery();
                 $model->load(Yii::$app->request->post());
                 $model->user_id = $value;
                 $model->status=0;
                 $model->save();
-            }
-            return true;
+        }
+        return true;
     }
 
     public function getStatus(){

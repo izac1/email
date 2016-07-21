@@ -20,7 +20,7 @@ class SendController extends Controller
         foreach ($messages as $messag) { 
 
             try{
-                Yii::$app->mail->compose('@webroot/uploads/'.TemplateFile::getFileByPath($messag->template->filename),['user'=>$messag->user])
+                Yii::$app->mail->compose('@upload_dir/'.TemplateFile::getFileByPath($messag->template->filename),['user'=>$messag->user])
                 ->setFrom(Yii::$app->params['adminEmail'])
                 ->setTo($messag->user->email)
                 ->setSubject($messag->title)
