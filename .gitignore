@@ -30,7 +30,7 @@ phpunit.phar
 /web/uploads
 
 #config file
-/config/params.php
+#/config/params.php
 
 #db config
 /config/db.php
