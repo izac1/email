@@ -18,6 +18,12 @@ class m160603_152243_create_admin_table extends Migration
             'password'=>$this->string()->notNull(),
             'auth_key'=>$this->string()->notNull(),
         ]);
+
+        $this->insert('admin_table',array(
+            'login'=>'admin',
+            'password' => Yii::$app->security->generatePasswordHash("qazxsw"),
+            'auth_key' => '4A4eSoS3ngHn8qGoTMeR33sjcw4jiCCd',
+        ));
     }
 
     /**
