@@ -16,6 +16,11 @@ class m160511_215500_create_categoris_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
         ]);
+
+        $this->insert('categoris_table',array(
+            'id'=>0,
+            'name' => "Нет категории",
+        ));
     }
 
     /**
