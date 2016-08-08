@@ -33,7 +33,7 @@ class StatsController extends Controller
     public function actionIndex()
     {
         $searchModel = new DeliverySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search_delev(Yii::$app->request->queryParams);
 
         return $this->render('index', [
              'searchModel' => $searchModel,
@@ -43,32 +43,37 @@ class StatsController extends Controller
 
 
     public function actionSucess($id){
-    	$model = new Delivery();
-    	$model = $model->find()->where(["id"=> $id])->one();
+    	//$model = new Delivery();
+    	//$model = $model->find()->where(["id"=> $id])->one();
         $searchModel = new DeliverySearch();
 
-    	$dataProvider = new ActiveDataProvider([
-    		'query' => Delivery::find()->where(["delivery_name"=> $model->delivery_name,"status"=>"1"]),
-    		]);
+    	$dataProvider = $searchModel->search_delev_by_status(Yii::$app->request->queryParams,$id,1); 
+
+        //new ActiveDataProvider([
+    		//'query' => Delivery::find()->where(["delivery_name"=> $model->delivery_name,"status"=>"1"]),
+    		//]);
     	
     	return $this->render('statistic',[
     			'dataProvider' => 	$dataProvider,
-    			'model' => $model,
                 'searchModel'=> $searchModel
     		]);
     }
 
     public function actionError($id){
-    	$model = new Delivery();
-    	$model = $model->find()->where(["id"=> $id])->one();
+    	//$model = new Delivery();
+    	//$model = $model->find()->where(["id"=> $id])->one();
 
-    	$dataProvider = new ActiveDataProvider([
+    	/*$dataProvider = new ActiveDataProvider([
     		'query' => Delivery::find()->where(["delivery_name"=> $model->delivery_name,"status"=>"2"]),
-    		]);
+    		]);*/
+
+        $searchModel = new DeliverySearch();
+
+        $dataProvider = $searchModel->search_delev_by_status(Yii::$app->request->queryParams,$id,2); 
     	
     	return $this->render('statistic',[
     			'dataProvider' => 	$dataProvider,
-    			'model' => $model, 
+                'searchModel'=> $searchModel
     		]);
 
 

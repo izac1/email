@@ -34,7 +34,7 @@ class Delivery extends \yii\db\ActiveRecord
             [['user_id', 'template_id', 'status'], 'integer'],
             [['delivery_name', 'title'], 'string', 'max' => 255],
         ];
-    }
+    }                
 
     /**
      * @inheritdoc
