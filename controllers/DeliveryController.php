@@ -12,6 +12,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\TemplateFile;
+use app\models\DeliverySearch;
 use yii\helpers\Url;    
 
 /**
@@ -49,11 +50,12 @@ class DeliveryController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Delivery::find(),
-        ]);
+        $searchModel = new DeliverySearch();
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

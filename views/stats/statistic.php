@@ -17,9 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
              [
+                'attribute'=>'user_id',
              	'label'=>'ФИО',
              	'value'=> function($model){
                 	return  $model->user->first_name.' '.$model->user->last_name;

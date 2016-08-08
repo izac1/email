@@ -9,7 +9,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Url; 
+use yii\helpers\Url;
+use app\models\DeliverySearch; 
 
 
 class StatsController extends Controller
@@ -31,11 +32,11 @@ class StatsController extends Controller
 
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Delivery::find()->groupBy('delivery_name'),
-        ]);
+        $searchModel = new DeliverySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -44,6 +45,7 @@ class StatsController extends Controller
     public function actionSucess($id){
     	$model = new Delivery();
     	$model = $model->find()->where(["id"=> $id])->one();
+        $searchModel = new DeliverySearch();
 
     	$dataProvider = new ActiveDataProvider([
     		'query' => Delivery::find()->where(["delivery_name"=> $model->delivery_name,"status"=>"1"]),
@@ -51,7 +53,8 @@ class StatsController extends Controller
     	
     	return $this->render('statistic',[
     			'dataProvider' => 	$dataProvider,
-    			'model' => $model, 
+    			'model' => $model,
+                'searchModel'=> $searchModel
     		]);
     }
 
