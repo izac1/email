@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title =  $dataProvider->query->where["status"] == 1 || $dataProvider->query->where[2]["status"]== 1 ?  'Список успешной рассылки ' .$model->delivery_name  : 'Список не успешной рассылки ' .$model->delivery_name; 
+$this->title = $dataProvider->query->where[2]["status"]== 1 ?  'Список успешной рассылки ' .$model->delivery_name  : 'Список не успешной рассылки ' .$model->delivery_name; 
 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
