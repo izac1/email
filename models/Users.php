@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\helpers\Url;
 
 
 use Yii;
@@ -60,5 +61,9 @@ class Users extends \yii\db\ActiveRecord
 
     public function getCategory(){
         return $this->hasOne(Categories::className(),['id'=>'category_id']);
+    }
+
+    public function unSubscribe(){
+        return Yii::$app->params['unsuburl'].'?id='.$this->id.'&signature='.base64_encode(sha1($this->id.$this->email));
     }
 }
