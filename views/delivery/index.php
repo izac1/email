@@ -16,34 +16,49 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать Рассылку', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'delivery_name',
             //'title',
-             ['attribute'=>'user_id',
-            'value'=> function($model){
-                return $model->user->first_name .' '.  $model->user->last_name .' '.  $model->user->email ;
+            ['attribute' => 'user_id',
+                'value' => function($model)
+                {
+                    if (is_null($model))
+                    {
+                        return '';
+                    }
+                    return $model->user->first_name . ' ' . $model->user->last_name . ' ' . $model->user->email;
                 }
             ],
-            ['attribute'=>'status',
-             'format'=>'html',
-            'value'=> function($model){
-                return $model->getStatus();
+            ['attribute' => 'status',
+                'format' => 'html',
+                'value' => function($model)
+                {
+                    if (is_null($model))
+                    {
+                        return '';
+                    }
+                    return $model->getStatus();
                 }
             ],
-            ['attribute'=>'template_id',
-            'value'=> function($model){
-                return $model->template->template_name;
+            ['attribute' => 'template_id',
+                'value' => function($model)
+                {
+                    if (is_null($model) || !isset($model->template) )
+                    {
+                        return '';
+                    }
+                    return $model->template->template_name;
                 }
             ],
-
             ['class' => 'yii\grid\ActionColumn',
-                'template'=>'{delete}'
+                'template' => '{delete}'
             ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

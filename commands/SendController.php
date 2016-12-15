@@ -18,10 +18,9 @@ class SendController extends Controller
 
         $messages = Delivery::find()->where(['status' => '0'])->limit(10)->all();
         foreach ($messages as $messag) { 
-
             try{
                 Yii::$app->mail->compose('@upload_dir/'.TemplateFile::getFileByPath($messag->template->filename),['user'=>$messag->user])
-                ->setFrom(Yii::$app->params['adminEmail'])
+                ->setFrom([Yii::$app->params['adminEmail'] => 'MyColibri'])
                 ->setTo($messag->user->email)
                 ->setSubject($messag->title)
                 ->send();
@@ -29,7 +28,7 @@ class SendController extends Controller
                 $messag->save();
 
             }catch(\Swift_SwiftException $exception){
-                var_dump($exception);
+                echo $exception->getMessage()."\r\n";
                 $messag->status = 2;
                 $messag->save();
             }
