@@ -64,6 +64,6 @@ class Users extends \yii\db\ActiveRecord
     }
 
     public function unSubscribe(){
-        return Yii::$app->params['unsuburl'].'?id='.$this->id.'&signature='.base64_encode(sha1($this->id.$this->email));
+        return Yii::$app->params['unsuburl'].'?id='.$this->colibri_id.'&signature='.base64_encode(sha1($this->colibri_id.$this->email));
     }
-}
+} 
