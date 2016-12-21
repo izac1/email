@@ -36,5 +36,5 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="lol">
-    <?php echo $this->renderFile(Yii::getAlias('@upload_dir').'/'.$file->getFileByPath($model->filename)); ?>
+    <?php echo $this->renderFile(Yii::getAlias('@upload_dir').'/'.$file->getFileByPath($model->filename),["user"=>$user]); ?>
 </div>
