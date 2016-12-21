@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use app\models\Users;
 
 /**
  * TemplateController implements the CRUD actions for Template model.
@@ -64,6 +65,7 @@ class TemplateController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
+            'user' => Users::find()->one(),
             'model' => $this->findModel($id),
             'file' => new TemplateFile(),
         ]);
