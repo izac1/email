@@ -86,7 +86,7 @@ class DeliveryController extends Controller
             $searchModel = new UsersSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-$dataProvider->pagination->pageSize=100;
+            $dataProvider->pagination=false;
 
             return $this->render('create', [
                 'model' => $model,

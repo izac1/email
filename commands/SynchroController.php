@@ -12,7 +12,6 @@ class SynchroController extends Controller
 	public function actionIndex(){
 		
 		foreach ( $this->xml2array($this->getXml(Yii::$app->params['xml_url']))['user'] as $value) {
-			
 			$xml_user = $this->xml2array($value);
 			$user = Users::find()->where(['colibri_id' => $xml_user['colibri_id']])->one();
 
@@ -21,8 +20,11 @@ class SynchroController extends Controller
 
 			$user->attributes = $xml_user;
 			try{ 
-				
-				$user->save();
+
+				if($user && $xml_user['delete'] === true)
+					$user->delete();
+				else
+					$user->save();
 
 			}catch(\Exception $e){
 
@@ -30,6 +32,7 @@ class SynchroController extends Controller
 			}
 			
 		}
+		echo "finish";
 
 	}
 

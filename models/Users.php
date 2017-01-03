@@ -34,8 +34,8 @@ class Users extends \yii\db\ActiveRecord
             [['first_name', 'last_name', 'email','is_active','is_demo','is_subscribe','is_online','is_widget','version'], 'required'],
             [['category_id','colibri_id'], 'integer'],
             [['first_name', 'last_name', 'email'], 'string', 'max' => 255],
-            ['colibri_id','default','value'=>0,'isEmpty'=>function ($value) {return 0;}],
-            ['category_id','default','value'=>0,'isEmpty'=>function ($value) {return 0;}],
+            ['colibri_id','default','value'=>0],
+            ['category_id','default','value'=>0],
         ];
     }
 
