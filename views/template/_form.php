@@ -13,6 +13,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'template_name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'template_title')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($file, 'templateFile')->fileInput() ?>
    
     <div class="form-group">

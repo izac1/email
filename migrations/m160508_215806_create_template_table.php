@@ -15,6 +15,7 @@ class m160508_215806_create_template_table extends Migration
         $this->createTable('template_table', [
             'id' => $this->primaryKey(),
             'template_name' => $this->string()->notNull(),
+            'template_title' => $this->string()->defaultValue('Не заданно'),
             'filename' => $this->string()->notNull(),
         ]);
     }

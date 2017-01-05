@@ -27,8 +27,8 @@ class Template extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['template_name'], 'required'],
-            [['template_name'], 'string', 'max' => 255],
+            [['template_name','template_title'], 'required'],
+            [['template_name','template_title'], 'string', 'max' => 255],
             ['template_name', 'unique', 'targetAttribute' => ['template_name'], 'message' => 'Название шаблона должно быть уникально.'],
         ];
     }
@@ -42,6 +42,7 @@ class Template extends \yii\db\ActiveRecord
             'id' => 'ID',
             'template_name' => 'Название шаблона',
             'filename' => 'Название файла',
+            'template_title' => 'Титул шаблона'
         ];
     }
 
